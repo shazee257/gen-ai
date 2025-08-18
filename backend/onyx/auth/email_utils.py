@@ -386,7 +386,7 @@ def build_user_email_invite(
     text_content = (
         f"You have been invited by {from_email} to join an organization on {application_name}.\n"
         "To join the organization, please visit the following link:\n"
-        f"{WEB_DOMAIN}/auth/signup?email={to_email}\n"
+        f"{WEB_DOMAIN}/auth/login?email={to_email}\n"
     )
     if auth_type == AuthType.CLOUD:
         text_content += "You'll be asked to set a password or login with Google to complete your registration."

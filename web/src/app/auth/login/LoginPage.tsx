@@ -20,10 +20,10 @@ export default function LoginPage({
   authTypeMetadata: AuthTypeMetadata | null;
   nextUrl: string | null;
   searchParams:
-    | {
-        [key: string]: string | string[] | undefined;
-      }
-    | undefined;
+  | {
+    [key: string]: string | string[] | undefined;
+  }
+  | undefined;
   hidePageRedirect?: boolean;
 }) {
   useSendAuthRequiredMessage();
@@ -89,7 +89,7 @@ export default function LoginPage({
           <div className="flex flex-col gap-y-2 items-center"></div>
         </>
       )}
-      {!hidePageRedirect && (
+      {/* {!hidePageRedirect && (
         <p className="text-center mt-4">
           Don&apos;t have an account?{" "}
           <span
@@ -105,7 +105,7 @@ export default function LoginPage({
             Create an account
           </span>
         </p>
-      )}
+      )} */}
     </div>
   );
 }

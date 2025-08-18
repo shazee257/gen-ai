@@ -30,7 +30,7 @@ export default function AnonymousPage({
       window.location.href = "/chat";
     } catch (error) {
       console.error("Error logging in as anonymous user:", error);
-      redirect("/auth/signup?error=Anonymous");
+      redirect("/auth/login?error=Anonymous");
     }
   };
 

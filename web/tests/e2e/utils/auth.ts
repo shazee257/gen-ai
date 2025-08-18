@@ -32,7 +32,7 @@ export async function loginAs(
     console.log(`Timeout occurred. Current URL: ${page.url()}`);
 
     // If redirect to /chat doesn't happen, go to /auth/login
-    await page.goto("http://localhost:3000/auth/signup");
+    await page.goto("http://localhost:3000/auth/login");
 
     await page.fill("#email", email);
     await page.fill("#password", password);
@@ -68,7 +68,7 @@ const generateRandomCredentials = () => {
 export async function loginAsRandomUser(page: Page) {
   const { email, password } = generateRandomCredentials();
 
-  await page.goto("http://localhost:3000/auth/signup");
+  await page.goto("http://localhost:3000/auth/login");
 
   await page.fill("#email", email);
   await page.fill("#password", password);
