@@ -27,7 +27,7 @@ export const LogoComponent = memo(function LogoComponent({
 
   return (
     <div
-      onClick={isAdmin ? () => router.push("/chat") : () => {}}
+      onClick={isAdmin ? () => router.push("/chat") : () => { }}
       className={`max-w-[200px]
         ${!show && "mobile:hidden"}
        flex text-text-900 items-center gap-x-1`}
@@ -76,11 +76,10 @@ export default function FixedLogo({
       </Link>
       <div className="mobile:hidden fixed left-4 bottom-4">
         <FiSidebar
-          className={`${
-            backgroundToggled
+          className={`${backgroundToggled
               ? "text-text-mobile-sidebar-toggled"
               : "text-text-mobile-sidebar-untoggled"
-          }`}
+            }`}
         />
       </div>
     </>
