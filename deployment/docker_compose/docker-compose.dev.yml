@@ -36,7 +36,7 @@ services:
       - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET:-}
       - OPENID_CONFIG_URL=${OPENID_CONFIG_URL:-}
       - TRACK_EXTERNAL_IDP_EXPIRY=${TRACK_EXTERNAL_IDP_EXPIRY:-}
-      - CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN:-}
+      - CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN:-http://localhost:3000}
       - INTEGRATION_TESTS_MODE=${INTEGRATION_TESTS_MODE:-}
       # Gen AI Settings
       - GEN_AI_MAX_TOKENS=${GEN_AI_MAX_TOKENS:-}
@@ -72,7 +72,7 @@ services:
       - POSTGRES_POOL_RECYCLE=${POSTGRES_POOL_RECYCLE:-}
       - VESPA_HOST=index
       - REDIS_HOST=cache
-      - WEB_DOMAIN=${WEB_DOMAIN:-} # For frontend redirect auth purpose
+      - WEB_DOMAIN=${WEB_DOMAIN:-http://localhost:3000} # For frontend redirect auth purpose
       # MinIO configuration
       - S3_ENDPOINT_URL=${S3_ENDPOINT_URL:-http://minio:9000}
       - S3_AWS_ACCESS_KEY_ID=${S3_AWS_ACCESS_KEY_ID:-minioadmin}
