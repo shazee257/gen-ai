@@ -7,17 +7,19 @@ const version = env_version || package_version;
 // Always require withSentryConfig
 const { withSentryConfig } = require("@sentry/nextjs");
 
+// IMPORTANT: read INTERNAL_URL at build time; rebuild when you change it
+const API_ORIGIN = process.env.INTERNAL_URL || "http://localhost:8080";
+
 const cspHeader = `
     style-src 'self' 'unsafe-inline';
     font-src 'self';
     object-src 'none';
     base-uri 'self';
     form-action 'self';
-    ${
-      process.env.NEXT_PUBLIC_CLOUD_ENABLED === "true"
-        ? "upgrade-insecure-requests;"
-        : ""
-    }
+    ${process.env.NEXT_PUBLIC_CLOUD_ENABLED === "true"
+    ? "upgrade-insecure-requests;"
+    : ""
+  }
 `;
 
 /** @type {import('next').NextConfig} */
@@ -71,26 +73,38 @@ const nextConfig = {
   },
   async rewrites() {
     return [
-      {
-        source: "/api/docs/:path*", // catch /api/docs and /api/docs/...
-        destination: `${
-          process.env.INTERNAL_URL || "http://localhost:8080"
-        }/docs/:path*`,
-      },
-      {
-        source: "/api/docs", // if you also need the exact /api/docs
-        destination: `${
-          process.env.INTERNAL_URL || "http://localhost:8080"
-        }/docs`,
-      },
-      {
-        source: "/openapi.json",
-        destination: `${
-          process.env.INTERNAL_URL || "http://localhost:8080"
-        }/openapi.json`,
-      },
+      // ✅ Proxy ALL API to your backend
+      { source: "/api/:path*", destination: `${API_ORIGIN}/:path*` },
+
+      // Your existing docs routes (keep them, they’ll also be covered by the catch-all)
+      { source: "/api/docs/:path*", destination: `${API_ORIGIN}/docs/:path*` },
+      { source: "/api/docs", destination: `${API_ORIGIN}/docs` },
+      { source: "/openapi.json", destination: `${API_ORIGIN}/openapi.json` },
     ];
   },
+
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/api/docs/:path*", // catch /api/docs and /api/docs/...
+  //       destination: `${
+  //         process.env.INTERNAL_URL || "http://localhost:8080"
+  //       }/docs/:path*`,
+  //     },
+  //     {
+  //       source: "/api/docs", // if you also need the exact /api/docs
+  //       destination: `${
+  //         process.env.INTERNAL_URL || "http://localhost:8080"
+  //       }/docs`,
+  //     },
+  //     {
+  //       source: "/openapi.json",
+  //       destination: `${
+  //         process.env.INTERNAL_URL || "http://localhost:8080"
+  //       }/openapi.json`,
+  //     },
+  //   ];
+  // },
 };
 
 // Sentry configuration for error monitoring:
