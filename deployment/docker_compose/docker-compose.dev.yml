@@ -19,7 +19,6 @@ services:
       - "8080:8080"
     environment:
       # Auth Settings
-      # - AUTH_TYPE=${AUTH_TYPE:-basic}
       - AUTH_TYPE=${AUTH_TYPE:-disabled}
       - SESSION_EXPIRE_TIME_SECONDS=${SESSION_EXPIRE_TIME_SECONDS:-}
       - ENCRYPTION_KEY_SECRET=${ENCRYPTION_KEY_SECRET:-}
@@ -37,7 +36,7 @@ services:
       - OAUTH_CLIENT_SECRET=${OAUTH_CLIENT_SECRET:-}
       - OPENID_CONFIG_URL=${OPENID_CONFIG_URL:-}
       - TRACK_EXTERNAL_IDP_EXPIRY=${TRACK_EXTERNAL_IDP_EXPIRY:-}
-      - CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN:-http://localhost:3000}
+      - CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN:-}
       - INTEGRATION_TESTS_MODE=${INTEGRATION_TESTS_MODE:-}
       # Gen AI Settings
       - GEN_AI_MAX_TOKENS=${GEN_AI_MAX_TOKENS:-}
@@ -73,7 +72,7 @@ services:
       - POSTGRES_POOL_RECYCLE=${POSTGRES_POOL_RECYCLE:-}
       - VESPA_HOST=index
       - REDIS_HOST=cache
-      - WEB_DOMAIN=${WEB_DOMAIN:-http://localhost:3000} # For frontend redirect auth purpose
+      - WEB_DOMAIN=${WEB_DOMAIN:-} # For frontend redirect auth purpose
       # MinIO configuration
       - S3_ENDPOINT_URL=${S3_ENDPOINT_URL:-http://minio:9000}
       - S3_AWS_ACCESS_KEY_ID=${S3_AWS_ACCESS_KEY_ID:-minioadmin}
@@ -121,6 +120,9 @@ services:
       # Chat Configs
       - HARD_DELETE_CHATS=${HARD_DELETE_CHATS:-}
 
+      # Show extra/uncommon connectors
+      - SHOW_EXTRA_CONNECTORS=${SHOW_EXTRA_CONNECTORS:-true}
+
       # Enables the use of bedrock models or IAM Auth
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
@@ -149,7 +151,7 @@ services:
         max-file: "6"
     # optional, only for debugging purposes
     volumes:
-      - api_server_logs:/var/log
+      - api_server_logs:/var/log/onyx
 
   background:
     image: onyxdotapp/onyx-backend:${IMAGE_TAG:-latest}
